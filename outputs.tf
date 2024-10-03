@@ -1,8 +1,8 @@
 output "message" {
   value = [
-#    "Welcome to expense project, Env- ${var.env1}",
-#     "${var.env1}"
-    var.env1
+    "Welcome to expense project, Env- ${var.env1}",
+     "${var.env1}"
+#    var.env1
   ]
 }
 
