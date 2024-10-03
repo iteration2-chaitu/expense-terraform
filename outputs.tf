@@ -4,5 +4,5 @@ output "message"
 }
 
 variable "env"{
-  default = "10"
+  default = 10
 }
