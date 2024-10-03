@@ -7,5 +7,5 @@ output "message" {
 #}
 
 variable env1{
-  default ="20"
+  default = 20
 }
