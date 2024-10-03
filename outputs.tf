@@ -1,8 +1,9 @@
-output "message"
-{
-  value = "Welcome to expense project, Env-${var.env}"
+output "message" {
+  value = "Welcome to expense project, Env- ${var.env}"
 }
 
-variable "env"{
-  default = 10
-}
+#variable "env"{
+#  default = 10
+#}
+
+variable env{}
