@@ -1,7 +1,7 @@
 output "message" {
   value = [
-    "Welcome to expense project, Env- ${var.env1}",
-     "${var.env1}"
+    "Welcome to expense project, Env- ${var.env}",
+     "${var.env}"
 #    var.env1
   ]
 }
@@ -10,6 +10,6 @@ output "message" {
 #  default = 10
 #}
 
-variable  "env1"{
+variable  "env"{
   default = 20
 }
