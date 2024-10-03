@@ -1,2 +1,2 @@
 #for storing the variables
-env = "dev"
+env = "prod"
