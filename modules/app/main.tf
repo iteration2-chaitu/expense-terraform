@@ -15,7 +15,7 @@ resource "aws_route53_record" "instance"{
   name = "terraform-${var.component}-${var.env}"
   type = "A"
   zone_id = var.zone_id
-  records = aws_instance.instance.private_ip
+  records = [aws_instance.instance.private_ip]
   ttl = 30
 }
 
