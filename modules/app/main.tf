@@ -10,8 +10,8 @@ resource "aws_instance" "instance"{
 }
 
 resource "aws_route53_record" "instance"{
-  ami = ""
-  instance_type = ""
+#  ami = ""
+#  instance_type = ""
   name = "terraform-${var.component}-${var.env}"
   type = "A"
   zone_id = var.zone_id
