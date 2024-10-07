@@ -10,6 +10,6 @@ output "message" {
 #  default = 10
 #}
 
-variable  "env"{
-  default = 20
-}
+#variable  "env"{
+#  default = 20
+#}
