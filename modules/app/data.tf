@@ -8,5 +8,5 @@ data "vault_generic_secret" "ssh" {
   path = "common/common"
 }
 data "aws_security_group" "selected" {
-  name = "allow-all"
+  name = "sg-08415191ee2b08cb9"
 }
