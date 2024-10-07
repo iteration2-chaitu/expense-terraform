@@ -8,5 +8,7 @@ data "aws_ami" "ami" {
 #  path = "common/common"
 #}
 data "aws_security_group" "selected" {
-  name = "allow-all"
+  tags = {
+    name = "allow-all"
+  }
 }
