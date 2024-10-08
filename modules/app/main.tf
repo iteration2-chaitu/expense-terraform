@@ -12,7 +12,7 @@ resource "aws_instance" "instance"{
 resource "aws_route53_record" "instance"{
 #  ami = ""
 #  instance_type = ""
-  name = "terraform-${var.component}-${var.env}"
+  name = "${var.component}-${var.env}"
   type = "A"
   zone_id = var.zone_id
   records = [aws_instance.instance.private_ip]
