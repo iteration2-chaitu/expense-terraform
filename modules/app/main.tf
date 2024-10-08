@@ -23,9 +23,9 @@ resource "aws_route53_record" "instance"{
 
 resource "null_resource" "ansible"{
 
-#  triggers = {
-#    always_run = "${timestamp()}"
-#  }
+  triggers = {
+    always_run = "${timestamp()}"
+  }
   provisioner "remote-exec" {
 
     connection {
