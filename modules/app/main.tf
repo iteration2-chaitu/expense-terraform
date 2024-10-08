@@ -25,7 +25,7 @@ resource "null_resource" "ansible"{
 
 #  triggers = {
 #    always_run = "${timestamp()}"
-  }
+#  }
   provisioner "remote-exec" {
 
     connection {
