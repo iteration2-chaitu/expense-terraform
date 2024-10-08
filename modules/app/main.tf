@@ -31,10 +31,10 @@ resource "null_resource" "ansible"{
     }
 
     inline = [
-      "sudo dnf install nginx -y",
-      "sudo systemctl start nginx"
-#      "sudo pip3.11 install ansible",
-#     "ansible-pull -i localhost, -U https://github.com/iteration2-chaitu/expense-ansible.git expense-pipeline.yml -e env=${var.env}  -e role_name=${var.component}"
+#      "sudo dnf install nginx -y",
+#      "sudo systemctl start nginx"
+      "sudo pip3.11 install ansible",
+     "ansible-pull -i localhost, -U https://github.com/iteration2-chaitu/expense-ansible.git expense-pipeline.yml -e env=${var.env}  -e role_name=${var.component}"
     ]
   }
 
