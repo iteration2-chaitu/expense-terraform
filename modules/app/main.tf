@@ -37,5 +37,8 @@ resource "null_resource" "ansible"{
      "ansible-pull -i localhost, -U https://github.com/iteration2-chaitu/expense-ansible.git expense-pipeline.yml -e env=${var.env}  -e role_name=${var.component}"
     ]
   }
+  lifecycle {
+    create_before_destroy = true
+  }
 
 }
