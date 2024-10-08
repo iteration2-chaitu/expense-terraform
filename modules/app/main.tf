@@ -7,22 +7,7 @@ resource "aws_instance" "instance"{
     Name = var.component
   }
 
-  provisioner "remote-exec" {
 
-    connection {
-      type     = "ssh"
-      user     = var.ssh_user   #"ec2-user"
-      password = var.ssh_password   #"DevOps321"
-      host     = aws_instance.instance.public_ip
-    }
-
-    inline = [
-      #      "sudo dnf install nginx -y",
-      #      "sudo systemctl start nginx"
-      "sudo pip3.11 install ansible",
-      "ansible-pull -i localhost, -U https://github.com/iteration2-chaitu/expense-ansible.git expense-pipeline.yml -e env=${var.env}  -e role_name=${var.component}"
-    ]
-  }
 
 }
 
@@ -38,22 +23,25 @@ resource "aws_route53_record" "instance"{
 
 resource "null_resource" "ansible"{
 
-#  provisioner "remote-exec" {
-#
-#    connection {
-#      type     = "ssh"
-#      user     = var.ssh_user   #"ec2-user"
-#      password = var.ssh_password   #"DevOps321"
-#      host     = aws_instance.instance.public_ip
-#    }
-#
-#    inline = [
-##      "sudo dnf install nginx -y",
-##      "sudo systemctl start nginx"
-#      "sudo pip3.11 install ansible",
-#     "ansible-pull -i localhost, -U https://github.com/iteration2-chaitu/expense-ansible.git expense-pipeline.yml -e env=${var.env}  -e role_name=${var.component}"
-#    ]
-#  }
+  triggers = {
+    always_run = "${timestamp()}"
+  }
+  provisioner "remote-exec" {
+
+    connection {
+      type     = "ssh"
+      user     = var.ssh_user   #"ec2-user"
+      password = var.ssh_password   #"DevOps321"
+      host     = aws_instance.instance.public_ip
+    }
+
+    inline = [
+#      "sudo dnf install nginx -y",
+#      "sudo systemctl start nginx"
+      "sudo pip3.11 install ansible",
+     "ansible-pull -i localhost, -U https://github.com/iteration2-chaitu/expense-ansible.git expense-pipeline.yml -e env=${var.env}  -e role_name=${var.component}"
+    ]
+  }
 
 
 
