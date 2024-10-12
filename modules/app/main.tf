@@ -8,9 +8,6 @@ resource "aws_instance" "instance"{
     monitor="yes"
     env = var.env
   }
-
-
-
 }
 
 resource "aws_route53_record" "instance"{
@@ -45,7 +42,5 @@ resource "null_resource" "ansible"{
 
     ]
   }
-
-
 
 }
