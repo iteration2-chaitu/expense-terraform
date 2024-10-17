@@ -1,5 +1,5 @@
  module "frontend" {
-   //depends_on              = [module.backend]
+   depends_on              = [module.backend]
    source                  = "./modules/app"
    component                 =  "frontend"
    env                     =  var.env
@@ -8,16 +8,16 @@
    ssh_password            = var.ssh_password
     zone_id                 = var.zone_id
  }
-# module "backend" {
-#   depends_on         =[module.mysql]
-#   source                  = "./modules/app"
-#   component                 =  "backend"
-#   env                     =  var.env
-#   instance_type           = var.instance_type
-#   ssh_user                = var.ssh_user
-#   ssh_password            = var.ssh_password
-#   zone_id                 = var.zone_id
-# }
+ module "backend" {
+   depends_on         =[module.mysql]
+   source                  = "./modules/app"
+   component                 =  "backend"
+   env                     =  var.env
+   instance_type           = var.instance_type
+   ssh_user                = var.ssh_user
+   ssh_password            = var.ssh_password
+   zone_id                 = var.zone_id
+ }
  module "mysql" {
    source                  = "./modules/app"
    component                 =  "mysql"
