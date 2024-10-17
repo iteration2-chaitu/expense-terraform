@@ -4,3 +4,4 @@ variable "component"{}
 variable "ssh_user"{}
 variable "ssh_password"{}
 variable "zone_id" {}
+//variable "vault_token"{}
