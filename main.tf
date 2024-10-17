@@ -4,8 +4,8 @@
    component                 =  "frontend"
    env                     =  var.env
    instance_type           = var.instance_type
-   ssh_user                = var.ssh_user
-   ssh_password            = var.ssh_password
+#   ssh_user                = var.ssh_user
+#   ssh_password            = var.ssh_password
     zone_id                 = var.zone_id
    vault_token             = var.vault_token
  }
@@ -15,8 +15,8 @@
    component                 =  "backend"
    env                     =  var.env
    instance_type           = var.instance_type
-   ssh_user                = var.ssh_user
-   ssh_password            = var.ssh_password
+#   ssh_user                = var.ssh_user
+#   ssh_password            = var.ssh_password
    zone_id                 = var.zone_id
    vault_token             = var.vault_token
  }
@@ -25,8 +25,8 @@
    component                 =  "mysql"
    env                     =  var.env
    instance_type           = var.instance_type
-   ssh_user                = var.ssh_user
-   ssh_password            = var.ssh_password
+#   ssh_user                = var.ssh_user
+#   ssh_password            = var.ssh_password
    zone_id                 = var.zone_id
    vault_token             = var.vault_token
  }
