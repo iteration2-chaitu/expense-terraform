@@ -8,31 +8,20 @@ pipelines:
         shallow_clone: false
         auto_update: true
         branch: main
+    secure_variables:
+      TF_VAR_vault_token: AES:YpVr0qXGYP0rh71xDjgSfg==:DP32JmVF/ZMqj6OfKv7/xNmbMt87nz/9KEgtrFkjtNI=
     stages:
       - DEV:
           fetch_materials: true
           environment_variables:
             env: dev
-            secure_variables:
-              TF_VARS_vault_token: AES:MMilkdViozLUEzSQKg2ZoA==:jitjhRHA3i3zmgAA9AbpFSxgdWBodNFwZRZKIhNlnfs=
           approval:
             type: manual
           jobs:
             terraform-apply:
               tasks:
-                - exec:
-                    command: terraform
-                    arguments:
-                      - "init"
-                      - "-backend-config=env-dev/state.tfvars"
-                    run_if: passed
-                - exec:
-                    command: terraform
-                    arguments:
-                      - "apply"
-                      - "-var-file=env-dev/main.tfvars"
-                      - "-auto-approve"
-                    run_if: passed
+                - exec: {command: terraform, arguments: [ "init", "-backend-config=env-dev/state.tfvars" ], run_if: passed}
+                - exec: {command: terraform, arguments: [ "apply", "-var-file=env-dev/main.tfvars", "-auto-approve" ], run_if: passed}
 
 
 #     - PROD:
