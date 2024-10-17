@@ -21,7 +21,7 @@ pipelines:
             terraform-apply:
               tasks:
                 - exec: {command: terraform, arguments: [ "init", "-backend-config=env-dev/state.tfvars" ], run_if: passed}
-                - exec: {command: terraform, arguments: [ "apply", "-var-file=env-dev/main.tfvars", "-auto-approve" ], run_if: passed}
+                - exec: {command: terraform, arguments: [ "apply", "-var-file=env-dev/main.tfvars"  "-var=vault_token=$TF_VAR_vault_token", "-auto-approve" ], run_if: passed}
 
 #     - PROD:
 #         fetch_materials: true
