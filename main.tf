@@ -27,6 +27,7 @@
    vpc_id                  =  module.vpc.vpc_id
  }
  module "mysql" {
+   depends_on         =[module.vpc]
    source                  = "./modules/app"
    component                 =  "mysql"
    env                     =  var.env
