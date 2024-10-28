@@ -29,7 +29,7 @@ resource "aws_security_group" "main" {
 resource "aws_instance" "instance"{
   ami = data.aws_ami.ami.image_id
   instance_type = var.instance_type
-  vpc_security_group_ids = aws_security_group.main.id     # [data.aws_security_group.selected.id]
+  vpc_security_group_ids = [aws_security_group.main.id ]    # [data.aws_security_group.selected.id]
   subnet_id = var.subnets[0]    # this should be added after creating the vpc
 
   tags = {
