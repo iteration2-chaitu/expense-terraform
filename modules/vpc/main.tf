@@ -48,7 +48,7 @@ resource "aws_subnet" "frontend" {
   cidr_block =  var.frontend_subnets[count.index]
   availability_zone =  var.availability_zones[count.index]
   tags = {
-    Name = "${var.env}-frontend-subnet-{count.index+1}"
+    Name = "${var.env}-frontend-subnet-${count.index+1}"
   }
 }
 
@@ -68,6 +68,6 @@ resource "aws_subnet" "db" {
   cidr_block =  var.db_subnets[count.index]
   availability_zone =  var.availability_zones[count.index]
   tags = {
-    Name = "${var.env}-db-subnet-{count.index+1}"
+    Name = "${var.env}-db-subnet-${count.index+1}"
   }
 }
