@@ -1,6 +1,6 @@
 variable "env" {}
 variable "vpc_cidr_block" {}
-#variable "subnet_cidr_block" {} # need to be removed
+variable "subnet_cidr_block" {} # need to be removed
 variable "default_vpc_id" {}
 variable "default_vpc_cidr" {}
 variable "default_route_table_id" {}
