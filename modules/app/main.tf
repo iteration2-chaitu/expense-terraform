@@ -1,7 +1,36 @@
+resource "aws_security_group" "main" {
+  name        = "${var.component}-${var.env}-sg"
+  description = "${var.component}-${var.env}-sg"
+  vpc_id      = var.vpc_id           #aws_vpc.main.id
+
+  tags = {
+    Name = "${var.component}-${var.env}-sg"
+  }
+  ingress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+#    ipv6_cidr_blocks = ["::/0"]
+
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+   protocol         = "-1"  # all trafic
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+
+  }
+}
+
+
 resource "aws_instance" "instance"{
   ami = data.aws_ami.ami.image_id
   instance_type = var.instance_type
-  vpc_security_group_ids = [data.aws_security_group.selected.id]
+  vpc_security_group_ids = aws_security_group.main.id     # [data.aws_security_group.selected.id]
+  subnet_id = var.subnets[0]    # this should be added after creating the vpc
 
   tags = {
     Name = var.component

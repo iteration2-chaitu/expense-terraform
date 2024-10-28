@@ -5,3 +5,5 @@ variable "component"{}
 #variable "ssh_password"{}
 variable "zone_id" {}
 variable "vault_token" {}
+variable "subnets" {}
+variable "vpc_id" {}

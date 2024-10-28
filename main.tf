@@ -8,6 +8,9 @@
 #   ssh_password            = var.ssh_password
     zone_id                 = var.zone_id
    vault_token             = var.vault_token
+   # this id for vpc
+   subnets                 = module.vpc.frontend_subnets
+   vpc_id                  =  module.vpc.vpc_id
  }
  module "backend" {
    depends_on         =[module.mysql]
@@ -19,6 +22,9 @@
 #   ssh_password            = var.ssh_password
    zone_id                 = var.zone_id
    vault_token             = var.vault_token
+   # this id for vpc
+   subnets                 = module.vpc.dackend_subnets
+   vpc_id                  =  module.vpc.vpc_id
  }
  module "mysql" {
    source                  = "./modules/app"
@@ -29,6 +35,9 @@
 #   ssh_password            = var.ssh_password
    zone_id                 = var.zone_id
    vault_token             = var.vault_token
+# this id for vpc
+   subnets                 = module.vpc.db_subnets
+   vpc_id                  =  module.vpc.vpc_id
  }
 
  module "vpc"{
