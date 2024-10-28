@@ -1,5 +1,5 @@
 variable "env" {}
-variable "vpc_cidr_block" {}
+#variable "vpc_cidr_block" {}
 #variable "subnet_cidr_block" {} # need to be removed
 variable "default_vpc_id" {}
 variable "default_vpc_cidr" {}
