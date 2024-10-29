@@ -15,5 +15,6 @@ variable "frontend_subnets"{}
 variable "backend_subnets" {}
 variable "db_subnets" {}
 variable "availability_zones" {}
+variable "public_subnets" {}
 #variable "subnets" {}
 #variable "vpc_id" {}
