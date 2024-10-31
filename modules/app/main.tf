@@ -86,6 +86,7 @@ resource "null_resource" "ansible" {
 }
 
 resource "aws_lb" "main" {
+  count              = var.lb_needed
   name               = "${var.env}-${var.component}-alb"
   internal           = var.lb_type == "public" ? false : true
   load_balancer_type = "application"
