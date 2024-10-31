@@ -14,6 +14,7 @@
    lb_type                 = "public"
    lb_needed               = "true"
    lb_subnets              = module.vpc.public_subnets
+   app_port                = 80
  }
  module "backend" {
    depends_on         =[module.mysql]
@@ -31,6 +32,7 @@
    lb_type                 = "private"
    lb_needed               = "true"
    lb_subnets              = module.vpc.backend_subnets
+   app_port                = 8080
  }
  module "mysql" {
    depends_on         =[module.vpc]

@@ -98,6 +98,33 @@ resource "aws_lb" "main" {
   }
 }
 
+resource "aws_lb_target_group" "main" {
+  count              = var.lb_needed ? 1 : 0
+  name               = "${var.env}-${var.component}-tg"
+  port               = var.app_port
+  protocol           = "Http"
+  vpc_id             = var.vpc_id
+}
+resource "aws_lb_target_group_attachment" "main" {
+  count              = var.lb_needed ? 1 : 0
+  target_group_arn = aws_lb_target_group.main[0].arn
+  target_id        = aws_instance.instance.id
+  port             = var.app_port
+}
+
+resource "aws_lb_listener" "front_end" {
+  count              = var.lb_needed ? 1 : 0
+  load_balancer_arn = aws_lb.main[0].arn
+  port              = var.app_port
+  protocol          = "HTTP"
+
+  default_action {
+    type = "forward"
+    target_group_arn = aws_lb_target_group.main[0].arn
+  }
+}
+
+
 #  provisioner "remote-exec" {   ...this is  a single provisoner
 #
 #    connection {
