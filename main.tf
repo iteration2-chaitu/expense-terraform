@@ -11,6 +11,9 @@
    # this id for vpc
    subnets                 = module.vpc.frontend_subnets
    vpc_id                  =  module.vpc.vpc_id
+   lb_type                 = "public"
+   lb_needed               = "true"
+   lb_subnets              = module.vpc.public_subnets
  }
  module "backend" {
    depends_on         =[module.mysql]
@@ -25,6 +28,9 @@
    # this id for vpc
    subnets                 = module.vpc.backend_subnets
    vpc_id                  =  module.vpc.vpc_id
+   lb_type                 = "private"
+   lb_needed               = "true"
+   lb_subnets              = module.vpc.backend_subnets
  }
  module "mysql" {
    depends_on         =[module.vpc]

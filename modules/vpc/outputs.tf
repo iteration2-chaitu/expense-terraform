@@ -13,3 +13,6 @@ output "backend_subnets" {
 output "db_subnets" {
   value = aws_subnet.db.*.id   # this output is a list ..to capture it we need this
 }
+output "public_subnets" {
+  value = aws_subnet.public.*.id   # this output is a list ..to capture it we need this
+}
