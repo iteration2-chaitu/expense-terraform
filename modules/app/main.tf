@@ -68,6 +68,7 @@ resource "aws_route53_record" "server"{
 resource "aws_route53_record" "load_balancer"{
   #  ami = ""
   #  instance_type = ""
+  #
   count = var.lb_needed ? 1: 0
   name = "${var.component}-${var.env}"
   type = "CNAME"
