@@ -117,7 +117,7 @@ resource "aws_lb_target_group" "main" {
     healthy_threshold    = 2
     interval             = 5
     path                 = "/health"
-    port                 = var.vpc_id
+    port                 = var.app_port
     unhealthy_threshold  = 2
     timeout              = 2
   }
