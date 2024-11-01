@@ -46,13 +46,32 @@ resource "aws_instance" "instance"{
 
 }
 
-resource "aws_route53_record" "instance"{
-#  ami = ""
-#  instance_type = ""
+#resource "aws_route53_record" "instance"{
+##  ami = ""
+##  instance_type = ""
+#  name = "${var.component}-${var.env}"
+#  type = "A"
+#  zone_id = var.zone_id
+#  records = [aws_instance.instance.private_ip]
+#  ttl = 30
+#}
+resource "aws_route53_record" "server"{
+  #  ami = ""
+  #  instance_type = ""
+  count = var.lb_needed ? 1: 0
   name = "${var.component}-${var.env}"
-  type = "A"
+  type = "CNAME"
   zone_id = var.zone_id
   records = [aws_instance.instance.private_ip]
+  ttl = 30
+}
+resource "aws_route53_record" "load_balancer"{
+  #  ami = ""
+  #  instance_type = ""
+  name = "${var.component}-${var.env}"
+  type = "CNAME"
+  zone_id = var.zone_id
+  records = [aws_lb.main[0].dns_name]
   ttl = 30
 }
 
