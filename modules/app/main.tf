@@ -132,8 +132,8 @@ resource "null_resource" "ansible" {
 #crearting separate security group for load balancer
 resource "aws_security_group" "load-balancer" {
   count       = var.lb_needed ? 1 : 0
-  name        = "${var.component}-${var.env}-sg"
-  description = "${var.component}-${var.env}-sg"
+  name        = "${var.component}-${var.env}-lb-sg"
+  description = "${var.component}-${var.env}-lb-sg"
   vpc_id      = var.vpc_id           #aws_vpc.main.id
 
   tags = {
