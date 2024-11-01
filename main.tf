@@ -17,7 +17,7 @@
    app_port                = 80
    bastion_nodes           = var.bastion_nodes
    prometheus_nodes        = var.prometheus_nodes
-   server_app_port_sg_cidr = module.vpc.public_subnets
+   server_app_port_sg_cidr = var.public_subnets
    lb_app_port_sg_cidr     = ["0.0.0.0/0"]
  }
  module "backend" {
@@ -39,8 +39,8 @@
    app_port                = 8080
    bastion_nodes           = var.bastion_nodes
    prometheus_nodes        = var.prometheus_nodes
-   server_app_port_sg_cidr = concat(module.vpc.frontend_subnets,module.vpc.backend_subnets)
-   lb_app_port_sg_cidr     = module.vpc.frontend_subnets
+   server_app_port_sg_cidr = concat(var.frontend_subnets,var.backend_subnets)
+   lb_app_port_sg_cidr     = var.frontend_subnets
  }
  module "mysql" {
    depends_on         =[module.vpc]
@@ -58,7 +58,7 @@
    bastion_nodes           = var.bastion_nodes
    prometheus_nodes        = var.prometheus_nodes
    app_port                = 3306
-   server_app_port_sg_cidr = module.vpc.backend_subnets
+   server_app_port_sg_cidr = var.backend_subnets
 
  }
 
