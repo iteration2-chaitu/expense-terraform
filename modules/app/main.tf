@@ -58,7 +58,7 @@ resource "aws_instance" "instance"{
 resource "aws_route53_record" "server"{
   #  ami = ""
   #  instance_type = ""
-  count = var.lb_needed ? 1: 0
+  count = var.lb_needed ? 0: 1
   name = "${var.component}-${var.env}"
   type = "A"
   zone_id = var.zone_id
