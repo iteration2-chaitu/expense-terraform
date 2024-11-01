@@ -18,14 +18,14 @@ resource "aws_security_group" "main" {
     from_port        = 22   #workstation
     to_port          = 22
     protocol         = "-1"
-    cidr_blocks      = [var.bastion_nodes]
+    cidr_blocks      = var.bastion_nodes
     #    ipv6_cidr_blocks = ["::/0"]
   }
   ingress {
     from_port        = 9100   #prometheus
     to_port          = 9100
     protocol         = "-1"
-    cidr_blocks      = [var.prometheus_nodes]
+    cidr_blocks      = var.prometheus_nodes
     #    ipv6_cidr_blocks = ["::/0"]
   }
 
