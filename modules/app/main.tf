@@ -9,7 +9,7 @@ resource "aws_security_group" "main" {
   ingress {
     from_port        = var.app_port   #0
     to_port          = var.app_port
-    protocol         = "-1"
+   protocol         =  "TCP"          #  "-1" for public ones
     cidr_blocks      =  var.server_app_port_sg_cidr       #["0.0.0.0/0"]
 #    ipv6_cidr_blocks = ["::/0"]
 
@@ -17,14 +17,14 @@ resource "aws_security_group" "main" {
   ingress {
     from_port        = 22   #workstation
     to_port          = 22
-    protocol         = "-1"
+    protocol         = "TCP"
     cidr_blocks      = var.bastion_nodes
     #    ipv6_cidr_blocks = ["::/0"]
   }
   ingress {
     from_port        = 9100   #prometheus
     to_port          = 9100
-    protocol         = "-1"
+    protocol         = "TCP"
     cidr_blocks      = var.prometheus_nodes
     #    ipv6_cidr_blocks = ["::/0"]
   }
@@ -142,7 +142,7 @@ resource "aws_security_group" "load-balancer" {
   ingress {
     from_port        = var.app_port  #0
     to_port          = var.app_port   # 0
-    protocol         = "-1"
+    protocol         = "TCP"    # -1 if it is public ip's
     cidr_blocks      =  var.lb_app_port_sg_cidr   # ["0.0.0.0/0"]
     #    ipv6_cidr_blocks = ["::/0"]
 
