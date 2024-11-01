@@ -7,12 +7,26 @@ resource "aws_security_group" "main" {
     Name = "${var.component}-${var.env}-sg"
   }
   ingress {
-    from_port        = 0
-    to_port          = 0
+    from_port        = var.app_port   #0
+    to_port          = var.app_port
     protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
+    cidr_blocks      =  var.server_app_port_sg_cidr       #["0.0.0.0/0"]
 #    ipv6_cidr_blocks = ["::/0"]
 
+  }
+  ingress {
+    from_port        = 22   #workstation
+    to_port          = 22
+    protocol         = "-1"
+    cidr_blocks      = [var.bastion_nodes]
+    #    ipv6_cidr_blocks = ["::/0"]
+  }
+  ingress {
+    from_port        = 9100   #prometheus
+    to_port          = 9100
+    protocol         = "-1"
+    cidr_blocks      = [var.prometheus_nodes]
+    #    ipv6_cidr_blocks = ["::/0"]
   }
 
   egress {
@@ -77,6 +91,8 @@ resource "aws_route53_record" "load_balancer"{
   ttl = 30
 }
 
+
+
 resource "null_resource" "ansible" {
 
   connection {
@@ -113,12 +129,41 @@ resource "null_resource" "ansible" {
   }
 }
 
+#crearting separate security group for load balancer
+resource "aws_security_group" "load-balancer" {
+  count       = var.lb_needed ? 1 : 0
+  name        = "${var.component}-${var.env}-sg"
+  description = "${var.component}-${var.env}-sg"
+  vpc_id      = var.vpc_id           #aws_vpc.main.id
+
+  tags = {
+    Name = "${var.component}-${var.env}-sg"
+  }
+  ingress {
+    from_port        = var.app_port  #0
+    to_port          = var.app_port   # 0
+    protocol         = "-1"
+    cidr_blocks      =  var.lb_app_port_sg_cidr   # ["0.0.0.0/0"]
+    #    ipv6_cidr_blocks = ["::/0"]
+
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"  # all trafic
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+
+  }
+}
+
 resource "aws_lb" "main" {
   count              = var.lb_needed ? 1 : 0
   name               = "${var.env}-${var.component}-alb"
   internal           = var.lb_type == "public" ? false : true
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.main.id]
+  security_groups    = [aws_security_group.load-balancer[0].id]
   subnets            = var.lb_subnets
 
   tags = {
