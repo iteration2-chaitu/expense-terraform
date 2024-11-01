@@ -68,11 +68,11 @@ resource "aws_route53_record" "server"{
 resource "aws_route53_record" "load_balancer"{
   #  ami = ""
   #  instance_type = ""
+  count = var.lb_needed ? 1: 0
   name = "${var.component}-${var.env}"
   type = "CNAME"
   zone_id = var.zone_id
-#  records = [aws_lb.main[0].dns_name]
-  records  = var.lb_needed && length(aws_lb.main) > 0 ? [aws_lb.main[0].dns_name] : []
+  records = [aws_lb.main[0].dns_name]
   ttl = 30
 }
 
