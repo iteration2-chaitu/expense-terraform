@@ -71,7 +71,7 @@ resource "aws_route53_record" "load_balancer"{
   name = "${var.component}-${var.env}"
   type = "CNAME"
   zone_id = var.zone_id
-  records = [aws_instance.instance.private_ip]
+  records = [aws_lb.main[0].dns_name]
   ttl = 30
 }
 
