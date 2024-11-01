@@ -60,7 +60,7 @@ resource "aws_route53_record" "server"{
   #  instance_type = ""
   count = var.lb_needed ? 1: 0
   name = "${var.component}-${var.env}"
-  type = "CNAME"
+  type = "A"
   zone_id = var.zone_id
   records = [aws_instance.instance.private_ip]
   ttl = 30
