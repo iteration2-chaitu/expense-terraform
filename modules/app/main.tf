@@ -242,7 +242,7 @@ resource "aws_lb_listener" "frontend-http" {
   }
 }
 resource "aws_lb_listener" "frontend-https" {
-  count              = var.lb_needed && var.component == "frontend" ? 1 : 0
+  count              = var.lb_needed && var.lb_type == "public" ? 1 : 0
   load_balancer_arn = aws_lb.main[0].arn
   port              = "443"
   protocol          = "HTTPS"
@@ -262,7 +262,7 @@ resource "aws_lb_listener" "frontend-https" {
 }
 
 resource "aws_lb_listener" "backend" {
-  count              = var.lb_needed && var.component  != "frontend" ? 1 : 0
+  count              = var.lb_needed && var.lb_type  != "public" ? 1 : 0
   load_balancer_arn = aws_lb.main[0].arn
   port              = var.app_port
   protocol          = "HTTP"
