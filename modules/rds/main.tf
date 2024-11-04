@@ -21,7 +21,7 @@ resource "aws_db_parameter_group" "main" {
   family = var.family
 }
 
-resource "aws_rds_db_subnet_group" "default" {
+resource "aws_db_subnet_group" "default" {
   name                        = "${var.component}-${var.env}-subnet-group"
   subnet_ids                  = var.subnet_ids
   tags = {
