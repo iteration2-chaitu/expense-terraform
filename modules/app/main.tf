@@ -139,14 +139,26 @@ resource "aws_security_group" "load-balancer" {
   tags = {
     Name = "${var.component}-${var.env}-sg"
   }
-  ingress {
-    from_port        = var.app_port  #0
-    to_port          = var.app_port   # 0
-    protocol         = "TCP"    # -1 if it is public ip's
-    cidr_blocks      =  var.lb_app_port_sg_cidr   # ["0.0.0.0/0"]
-    #    ipv6_cidr_blocks = ["::/0"]
 
-  }
+  dynamic "ingress" {
+   for_each = var.lb_ports
+   content {
+         from_port        = ingress.value  #0
+         to_port          = ingress.value   # 0
+         protocol         = "TCP"    # -1 if it is public ip's
+         cidr_blocks      =  var.lb_app_port_sg_cidr   # ["0.0.0.0/0"]
+   }
+}
+
+
+#  ingress {
+#    from_port        = var.app_port  #0
+#    to_port          = var.app_port   # 0
+#    protocol         = "TCP"    # -1 if it is public ip's
+#    cidr_blocks      =  var.lb_app_port_sg_cidr   # ["0.0.0.0/0"]
+#    #    ipv6_cidr_blocks = ["::/0"]
+#
+#  }
 
   egress {
     from_port        = 0
