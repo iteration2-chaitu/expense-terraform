@@ -46,6 +46,12 @@ resource "aws_instance" "instance"{
   vpc_security_group_ids = [aws_security_group.main.id ]    # [data.aws_security_group.selected.id]
   subnet_id = var.subnets[0]    # this should be added after creating the vpc
 
+  # for adding encryption to the instances via KMS
+  root_block_device{
+    encrypted = true
+    kms_key_id = var.kms_key_id
+  }
+
   tags = {
     Name = var.component
     monitor="yes"
