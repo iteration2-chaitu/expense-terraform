@@ -1,4 +1,5 @@
  module "frontend" {
+#   depends_on              = [module.backend]
    depends_on              = [module.backend]
    source                  = "./modules/app"
    component                 =  "frontend"
@@ -24,7 +25,7 @@
 
  }
  module "backend" {
-   depends_on         =[module.mysql]
+   depends_on         =[module.rds]
    source                  = "./modules/app"
    component                 =  "backend"
    env                     =  var.env
@@ -62,25 +63,25 @@
    vpc_id = module.vpc.vpc_id
  }
 
- module "mysql" {
-   depends_on         =[module.vpc]
-   source                  = "./modules/app"
-   component                 =  "mysql"
-   env                     =  var.env
-   instance_type           = var.instance_type
-#   ssh_user                = var.ssh_user
-#   ssh_password            = var.ssh_password
-   zone_id                 = var.zone_id
-   vault_token             = var.vault_token
-# this id for vpc
-   subnets                 = module.vpc.db_subnets
-   vpc_id                  =  module.vpc.vpc_id
-   bastion_nodes           = var.bastion_nodes
-   prometheus_nodes        = var.prometheus_nodes
-   app_port                = 3306
-   server_app_port_sg_cidr = var.backend_subnets
-
- }
+# module "mysql" {
+#   depends_on         =[module.vpc]
+#   source                  = "./modules/app"
+#   component                 =  "mysql"
+#   env                     =  var.env
+#   instance_type           = var.instance_type
+##   ssh_user                = var.ssh_user
+##   ssh_password            = var.ssh_password
+#   zone_id                 = var.zone_id
+#   vault_token             = var.vault_token
+## this id for vpc
+#   subnets                 = module.vpc.db_subnets
+#   vpc_id                  =  module.vpc.vpc_id
+#   bastion_nodes           = var.bastion_nodes
+#   prometheus_nodes        = var.prometheus_nodes
+#   app_port                = 3306
+#   server_app_port_sg_cidr = var.backend_subnets
+#
+# }
 
  module "vpc"{
 
