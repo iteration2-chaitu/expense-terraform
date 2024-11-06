@@ -111,7 +111,8 @@ resource "null_resource" "ansible" {
     host     = aws_instance.instance.private_ip   #this is once we create nat gateways
   }
   triggers = {
-    always_run = "${timestamp()}"
+#    always_run = "${timestamp()}"
+     instance =aws_instance.instance.id   #  it will trigger when instance is changed
   }
 
   provisioner "remote-exec" {
