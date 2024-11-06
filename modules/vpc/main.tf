@@ -17,6 +17,7 @@ resource "aws_vpc" "main" {
 #  }
 #}
 
+
 resource "aws_vpc_peering_connection" "main" {
 #  peer_owner_id = var.peer_owner_id ..not mandatory
   peer_vpc_id   = var.default_vpc_id
