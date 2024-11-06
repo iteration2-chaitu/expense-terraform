@@ -62,7 +62,7 @@
    prometheus_nodes             = var.prometheus_nodes
    server_app_port_sg_cidr      = concat(var.frontend_subnets,var.backend_subnets)
    subnets                      = module.vpc.vpc_id
-
+   vpc_id                       = module.vpc.vpc_id
  }
 
  module "rds" {
