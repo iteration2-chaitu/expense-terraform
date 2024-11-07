@@ -27,6 +27,4 @@ variable "kms_key_id" {}
 variable "max_capacity" {}
 variable "min_capacity" {}
 
-variable "lb_app_port_sg_cidr" {}
-variable "lb_ports" {}
 
