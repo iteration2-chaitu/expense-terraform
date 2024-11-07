@@ -116,12 +116,12 @@ resource "aws_lb" "main" {
 
 
 resource "aws_security_group" "load-balancer" {
-  name        = "${var.component}-${var.env}-sg"
-  description = "${var.component}-${var.env}-sg"
+  name        = "${var.component}-${var.env}-sg-asg"
+  description = "${var.component}-${var.env}-sg-asg"
   vpc_id      = var.vpc_id           #aws_vpc.main.id
 
   tags = {
-    Name = "${var.component}-${var.env}-sg"
+    Name = "${var.component}-${var.env}-sg-asg"
   }
   ingress {
     from_port        = var.app_port   #0
