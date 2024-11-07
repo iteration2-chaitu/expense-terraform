@@ -42,7 +42,6 @@
    subnets                 = module.vpc.frontend_subnets
    vpc_id                  =  module.vpc.vpc_id
    vault_token             = var.vault_token
-
    lb_type                 = "public"
    certificate_arn         = var.certificate_arn
    lb_app_port_sg_cidr     = ["0.0.0.0/0"]
