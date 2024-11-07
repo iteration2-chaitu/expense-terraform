@@ -97,7 +97,7 @@
    lb_app_port_sg_cidr     = var.frontend_subnets
    zone_id                 = var.zone_id
    lb_subnets              = module.vpc.backend_subnets
-   lb_ports                = { http: 8080 }
+   lb_ports                = {http: 8080}
  }
 
  module "rds" {
