@@ -14,3 +14,5 @@ variable "lb_type" {}
 variable "certificate_arn" {}
 variable "zone_id" {}
 variable "lb_subnets" {}
+variable "lb_app_port_sg_cidr" {}
+variable "lb_ports" {}
