@@ -28,7 +28,7 @@
 # }
 
  module "frontend" {
-   depends_on              = [module.backend]
+#   depends_on              = [module.backend]
    source                  = "./modules/app-asg"
    app_port                = 80
    component                 =  "frontend"
