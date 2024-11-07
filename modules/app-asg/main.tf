@@ -116,8 +116,8 @@ resource "aws_lb" "main" {
 
 
 resource "aws_security_group" "load-balancer" {
-  name        = "${var.component}-${var.env}-sg"
-  description = "${var.component}-${var.env}-sg"
+  name        = "${var.component}-${var.env}-lb-sg"
+  description = "${var.component}-${var.env}-lb-sg"
   vpc_id      = var.vpc_id           #aws_vpc.main.id
 
   tags = {
