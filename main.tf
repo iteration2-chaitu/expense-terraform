@@ -27,23 +27,23 @@
 #
 # }
 
-# module "frontend" {
-##   depends_on              = [module.backend]
-#   source                  = "./modules/app-asg"
-#   app_port                = 80
-#   component                 =  "frontend"
-#   env                     =  var.env
-#   instance_type           = var.instance_type
-#   bastion_nodes           = var.bastion_nodes
-#   prometheus_nodes        = var.prometheus_nodes
-#   server_app_port_sg_cidr = var.public_subnets
-#   min_capacity            = var.min_capacity
-#   max_capacity            = var.max_capacity
-#   subnets                 = module.vpc.frontend_subnets
-#   vpc_id                  =  module.vpc.vpc_id
-#   vault_token             = var.vault_token
-#
-# }
+ module "frontend" {
+#   depends_on              = [module.backend]
+   source                  = "./modules/app-asg"
+   app_port                = 80
+   component                 =  "frontend"
+   env                     =  var.env
+   instance_type           = var.instance_type
+   bastion_nodes           = var.bastion_nodes
+   prometheus_nodes        = var.prometheus_nodes
+   server_app_port_sg_cidr = var.public_subnets
+   min_capacity            = var.min_capacity
+   max_capacity            = var.max_capacity
+   subnets                 = module.vpc.frontend_subnets
+   vpc_id                  =  module.vpc.vpc_id
+   vault_token             = var.vault_token
+
+ }
 # Replace with asg
 # module "backend" {
 #   depends_on         =[module.rds]
