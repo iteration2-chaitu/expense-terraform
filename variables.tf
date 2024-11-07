@@ -26,3 +26,8 @@ variable "kms_key_id" {}
 # asg
 variable "max_capacity" {}
 variable "min_capacity" {}
+
+variable "lb_type" {}
+variable "lb_subnets" {}
+
+

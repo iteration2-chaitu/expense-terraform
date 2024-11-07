@@ -102,3 +102,114 @@ resource "aws_security_group" "main" {
   }
 }
 
+resource "aws_lb" "main" {
+  name               = "${var.env}-${var.component}-alb"
+  internal           = var.lb_type == "public" ? false : true
+  load_balancer_type = "application"
+  security_groups    = [aws_security_group.load-balancer.id]
+  subnets            = var.lb_subnets
+
+  tags = {
+    Environment = "${var.env}-${var.component}-alb"
+  }
+}
+
+
+resource "aws_security_group" "load-balancer" {
+  name        = "${var.component}-${var.env}-sg"
+  description = "${var.component}-${var.env}-sg"
+  vpc_id      = var.vpc_id           #aws_vpc.main.id
+
+  tags = {
+    Name = "${var.component}-${var.env}-sg"
+  }
+  ingress {
+    from_port        = var.app_port   #0
+    to_port          = var.app_port
+    protocol         =  "TCP"          #  "-1" for public ones
+    cidr_blocks      =  var.server_app_port_sg_cidr       #["0.0.0.0/0"]
+    #    ipv6_cidr_blocks = ["::/0"]
+
+  }
+  ingress {
+    from_port        = 22   #workstation
+    to_port          = 22
+    protocol         = "TCP"
+    cidr_blocks      = var.bastion_nodes
+    #    ipv6_cidr_blocks = ["::/0"]
+  }
+  ingress {
+    from_port        = 9100   #prometheus
+    to_port          = 9100
+    protocol         = "TCP"
+    cidr_blocks      = var.prometheus_nodes
+    #    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"  # all trafic
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+
+  }
+}
+
+resource "aws_route53_record" "load_balancer"{
+  name = "${var.component}-${var.env}"
+  type = "CNAME"
+  zone_id = var.zone_id
+  records = [aws_lb.main.dns_name]
+  ttl = 30
+}
+
+resource "aws_lb_listener" "frontend-http" {
+  count              =  var.lb_type == "public" ? 1 : 0
+  load_balancer_arn = aws_lb.main.arn
+  port              = var.app_port
+  protocol          = "HTTP"
+
+  default_action {
+    type = "redirect"
+
+    redirect {
+      port = "443"
+      protocol ="HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+}
+resource "aws_lb_listener" "frontend-https" {
+  count              =  var.lb_type == "public" ? 1 : 0
+  load_balancer_arn = aws_lb.main.arn
+  port              = "443"
+  protocol          = "HTTPS"
+  ssl_policy = "ELBSecurityPolicy-TLS13-1-2-2021-06"
+  certificate_arn = var.certificate_arn
+
+  default_action {
+    type = "forward"
+    target_group_arn = aws_lb_target_group.main.arn
+
+    redirect {
+      port = "443"
+      protocol ="HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+}
+
+resource "aws_lb_listener" "backend" {
+  count              =  var.lb_type  != "public" ? 1 : 0
+  load_balancer_arn = aws_lb.main.arn
+  port              = var.app_port
+  protocol          = "HTTP"
+
+  default_action {
+    type = "forward"
+    target_group_arn = aws_lb_target_group.main.arn
+  }
+}
+
+
