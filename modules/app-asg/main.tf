@@ -33,6 +33,7 @@ resource "aws_autoscaling_group" "main" {
 }
 
 resource "aws_lb_target_group" "main" {
+  name                 = "${var.env}-${var.component}-tg"
   port         = var.app_port
   protocol     = "HTTP"
   vpc_id     = var.vpc_id
@@ -118,41 +119,27 @@ resource "aws_lb" "main" {
 resource "aws_security_group" "load-balancer" {
   name        = "${var.component}-${var.env}-lb-sg"
   description = "${var.component}-${var.env}-lb-sg"
-  vpc_id      = var.vpc_id           #aws_vpc.main.id
+  vpc_id      = var.vpc_id
 
-  tags = {
-    Name = "${var.component}-${var.env}-sg"
-  }
-  ingress {
-    from_port        = var.app_port   #0
-    to_port          = var.app_port
-    protocol         =  "TCP"          #  "-1" for public ones
-    cidr_blocks      =  var.server_app_port_sg_cidr       #["0.0.0.0/0"]
-    #    ipv6_cidr_blocks = ["::/0"]
-
-  }
-  ingress {
-    from_port        = 22   #workstation
-    to_port          = 22
-    protocol         = "TCP"
-    cidr_blocks      = var.bastion_nodes
-    #    ipv6_cidr_blocks = ["::/0"]
-  }
-  ingress {
-    from_port        = 9100   #prometheus
-    to_port          = 9100
-    protocol         = "TCP"
-    cidr_blocks      = var.prometheus_nodes
-    #    ipv6_cidr_blocks = ["::/0"]
+  dynamic "ingress" {
+    for_each = var.lb_ports
+    content {
+      from_port   = ingress.value
+      to_port     = ingress.value
+      protocol    = "TCP"
+      cidr_blocks = var.lb_app_port_sg_cidr
+    }
   }
 
   egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"  # all trafic
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
+  tags = {
+    Name = "${var.component}-${var.env}-sg"
   }
 }
 
